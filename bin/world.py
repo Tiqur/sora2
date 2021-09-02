@@ -21,6 +21,13 @@ class World:
         # Determine if slime chunk
         return self._random.next_int(10) == 0;
 
+    # Search radius around 0, 0 for slime chunk clusters
+    def _search(self, radius):
+        half_radius = int(radius / 2);
+        for x in range(-half_radius, half_radius):
+            for z in range(-half_radius, half_radius):
+                self._get_cluster(x, z, True);
+
     # Recursively search for nearby slime chunks within cluster and return dimensions
     def get_cluster(self, x, z, first=False):
 
@@ -36,7 +43,7 @@ class World:
             checked_chunks.checked_chunks = [];
 
         # Push self to checked chunks
-        get_cluster.checked_chunks += {x: x, z: z};
+        get_cluster.checked_chunks += {'x': x, 'x': z};
 
         print(len(get_cluster.checked_chunks));
         

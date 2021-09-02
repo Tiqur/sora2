@@ -3,9 +3,11 @@ import numpy as np
 
 # Emulate world generation
 class World:
-    def __init__(self, seed):
+    def __init__(self, seed, radius):
         self._seed = seed;
         self._random = Random();
+        self._slime_chunks = [];
+        self._search(radius);
 
     # Determine if there is a slime chunk at x, z
     def _is_slime_chunk(self, xPosition, zPosition):
@@ -29,32 +31,30 @@ class World:
                 self._get_cluster(x, z, True);
 
     # Recursively search for nearby slime chunks within cluster and return dimensions
-    def get_cluster(self, x, z, first=False):
+    def _get_cluster(self, x, z, first=False):
 
         # If not slime chunk, exit
         if not self._is_slime_chunk(x, z): return;
+        current_coords = {'x': x, 'z': z};
 
-        # Holds coordinats of checked chunks
-        if not hasattr(self._is_slime_chunk, 'checked_chunks'):
-            get_cluster.checked_chunks = [];
+        # If not slime chunk andand does not include current coordinates ( chunk hasn't been checked )
+        if self._is_slime_chunk(x, z) and not current_coords in self._slime_chunks:
 
-        # If first instance of class, clear coordinates
-        if first:
-            checked_chunks.checked_chunks = [];
+            # If first instance of class, clear coordinates
+            if first:
+                self._slime_chunks.clear();
 
-        # Push self to checked chunks
-        get_cluster.checked_chunks += {'x': x, 'x': z};
-
-        print(len(get_cluster.checked_chunks));
-        
-        # Check sides 
-        self._get_cluster(x+1, z);
-        self._get_cluster(x-1, z);
-        self._get_cluster(x, z+1);
-        self._get_cluster(x, z-1);
-
-
+            # Push self to checked chunks
+            self._slime_chunks.append(current_coords);
             
+            # Check sides 
+            self._get_cluster(x+1, z);
+            self._get_cluster(x-1, z);
+            self._get_cluster(x, z+1);
+            self._get_cluster(x, z-1);
+
+            print(len(self._slime_chunks));
+
 
 
     # For debugging

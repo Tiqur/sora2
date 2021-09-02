@@ -11,7 +11,9 @@ class Random:
     def set_seed(self, seed):
         self._seed = seed;
 
-    
+    # Scramble initial seed
+    def initial_scramble(seed):
+        return (seed ^ this._multiplier) & this._mask
 
 
     

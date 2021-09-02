@@ -12,14 +12,15 @@ class Random:
         print(self._multiplier);
         print(self._addend);
         print(self._mask);
+        print(self.initial_scramble(self._seed));
 
     # Set the seed of the random number generator
     def set_seed(self, seed):
         self._seed = seed;
 
     # Scramble initial seed
-    def initial_scramble(seed):
-        return (seed ^ this._multiplier) & this._mask;
+    def initial_scramble(self, seed):
+        return (seed ^ self._multiplier) & self._mask;
 
     # Generate next psuedo random number
     def next(bits):

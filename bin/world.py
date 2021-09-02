@@ -20,3 +20,12 @@ class World:
 
         # Determine if slime chunk
         return self._random.next_int(10) == 0;
+
+    # For debugging
+    def _print_map(self, radius):
+        half_radius = int(radius / 2);
+        for x in range(-half_radius, half_radius):
+            for z in range(-half_radius, half_radius):
+                print('■ ' if self._is_slime_chunk(x, z) else '□ ', end='');
+            print('');
+        

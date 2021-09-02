@@ -7,6 +7,12 @@ class Random:
         self._mask = (1 << 48) - 1;
         self._seed = seed;
 
+    # Set the seed of the random number generator
+    def set_seed(self, seed):
+        self._seed = seed;
+
+    
+
 
     
 

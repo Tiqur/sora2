@@ -27,8 +27,9 @@ class World:
         # If not slime chunk, exit
         if not self._is_slime_chunk(x, z): return;
 
-        # Holds coordinats of checkd chunks
-        get_cluster.checked_chunks = [];
+        # Holds coordinats of checked chunks
+        if not hasattr(self._is_slime_chunk, 'checked_chunks'):
+            get_cluster.checked_chunks = [];
 
         # If first instance of class, clear coordinates
         if first:

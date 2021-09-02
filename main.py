@@ -1,5 +1,5 @@
-from bin.random import Random;
+from bin.world import World;
 
-r = Random();
-r.set_seed(200);
-print(r.next_int(10))
+w = World(1)
+
+

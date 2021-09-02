@@ -7,7 +7,9 @@ class World:
         self._seed = seed;
         self._random = Random();
 
+    # Determine if there is a slime chunk at x, z
     def _is_slime_chunk(self, xPosition, zPosition):
+        # Set seed and location
         self._random.set_seed(
           np.int32(self._seed) +
           np.int32(xPosition * xPosition * 0x4c1906) +
@@ -16,4 +18,5 @@ class World:
           np.int32(zPosition * 0x5f24f) ^ 0x3ad8025f
         );
 
+        # Determine if slime chunk
         return self._random.next_int(10) == 0;

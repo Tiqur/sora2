@@ -24,8 +24,8 @@ class World:
     # Search radius around 0, 0 for slime chunk clusters
     def _search(self, radius):
         half_radius = int(radius / 2);
-        for x in range(-half_radius, half_radius):
-            for z in range(-half_radius, half_radius):
+        for z in range(-half_radius, half_radius):
+            for x in range(-half_radius, half_radius):
                 self._get_cluster(x, z, True);
 
     # Recursively search for nearby slime chunks within cluster and return dimensions
@@ -60,8 +60,8 @@ class World:
     # For debugging
     def _print_map(self, radius):
         half_radius = int(radius / 2);
-        for x in range(-half_radius, half_radius):
-            for z in range(-half_radius, half_radius):
+        for z in range(-half_radius, half_radius):
+            for x in range(-half_radius, half_radius):
                 print('■ ' if self._is_slime_chunk(x, z) else '□ ', end='');
             print('');
         

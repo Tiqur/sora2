@@ -24,7 +24,7 @@ class Random:
     # Generate next psuedo random number
     def next(bits):
         this._seed = (this._seed * this._multiplier + this._addend) & this._mask;
-        return ()
+        return (this._seed >> (48 - bits));
 
 
 

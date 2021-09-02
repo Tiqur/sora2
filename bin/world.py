@@ -3,8 +3,9 @@ import numpy as np
 
 # Emulate world generation
 class World:
-    def __init__(self, seed, radius):
+    def __init__(self, seed=0, radius=20, min_size=8):
         self._seed = seed;
+        self._min_size = min_size;
         self._random = Random();
         self._slime_chunks = [];
         self._search(radius);
@@ -53,7 +54,32 @@ class World:
             self._get_cluster(x, z+1);
             self._get_cluster(x, z-1);
 
-            print(len(self._slime_chunks));
+            # Add cluster to set if size >= min_size
+            if len(self._slime_chunks) >= self._min_size and first:
+                cluster_region = self._generate_cluster_region(self._slime_chunks);
+                print(len(self._slime_chunks));
+
+    # Generate 2D array representation of cluster
+    def _generate_cluster_region(self, chunks):
+
+        # Initialize bounding box
+        top = bottom = chunks.pop().get('x');
+        left = right = chunks.pop().get('z');
+
+        # Find bounding box
+        for c in chunks:
+            left = min(c.get('z'), left);
+            right = max(c.get('z'), right);
+            top = min(c.get('x'), top);
+            bottom = min(c.get('x'), bottom);
+
+        # Bounding box dimensions
+        width = right + 1 - left;
+        height = top + 1 - bottom;
+
+        # Create 2D representation of chunk cluster
+        cluster = [[0]*height]*width;
+
 
 
 

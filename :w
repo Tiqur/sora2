@@ -10,7 +10,7 @@ class Random:
 
     # Scramble initial seed
     def _initial_scramble(self, seed):
-        return (seed ^ self._multiplier) & self._mask;
+        return (np.power(np.int32(seed), self._multiplier)) & self._mask;
 
     # Generate next psuedo random number
     def _next(self, bits):

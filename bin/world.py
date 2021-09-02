@@ -21,6 +21,34 @@ class World:
         # Determine if slime chunk
         return self._random.next_int(10) == 0;
 
+    # Recursively search for nearby slime chunks within cluster and return dimensions
+    def get_cluster(self, x, z, first=False):
+
+        # If not slime chunk, exit
+        if not self._is_slime_chunk(x, z): return;
+
+        # Holds coordinats of checkd chunks
+        get_cluster.checked_chunks = [];
+
+        # If first instance of class, clear coordinates
+        if first:
+            checked_chunks.checked_chunks = [];
+
+        # Push self to checked chunks
+        get_cluster.checked_chunks += {x: x, z: z};
+
+        print(len(get_cluster.checked_chunks));
+        
+        # Check sides 
+        self._get_cluster(x+1, z);
+        self._get_cluster(x-1, z);
+        self._get_cluster(x, z+1);
+        self._get_cluster(x, z-1);
+
+
+            
+
+
     # For debugging
     def _print_map(self, radius):
         half_radius = int(radius / 2);

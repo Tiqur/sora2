@@ -1,6 +1,5 @@
 from bin.random import Random;
 import numpy as np;
-import copy;
 
 # Emulate world generation
 class World:
@@ -37,7 +36,7 @@ class World:
 
         # If not slime chunk, exit
         if not self._is_slime_chunk(x, z): return;
-        current_coords = {'x': x, 'z': z};
+        current_coords = (x, z);
 
         # If not slime chunk andand does not include current coordinates ( chunk hasn't been checked )
         if self._is_slime_chunk(x, z) and not current_coords in self._slime_chunks:
@@ -57,29 +56,36 @@ class World:
 
             # Add cluster to set if size >= min_size
             if len(self._slime_chunks) >= self._min_size and first:
-                cluster_region = self._generate_cluster_region(copy.deepcopy(self._slime_chunks));
-                print(self._slime_chunks);
+                cluster_region = self._generate_cluster_region(self._slime_chunks);
 
     # Generate 2D array representation of cluster
     def _generate_cluster_region(self, chunks):
 
         # Initialize bounding box
-        top = bottom = chunks.pop().get('x');
-        left = right = chunks.pop().get('z');
+        left = right = chunks[0][0];
+        top = bottom = chunks[0][1];
 
         # Find bounding box
         for c in chunks:
-            left = min(c.get('z'), left);
-            right = max(c.get('z'), right);
-            top = min(c.get('x'), top);
-            bottom = min(c.get('x'), bottom);
+            left = min(c[0], left);
+            right = max(c[0], right);
+            top = max(c[1], top);
+            bottom = min(c[1], bottom);
 
         # Bounding box dimensions
         width = right + 1 - left;
         height = top + 1 - bottom;
 
-        # Create 2D representation of chunk cluster
-        cluster = [[0]*height]*width;
+        # Initialize 2D array
+        cluster_region = [[0 for i in range(width)] for j in range(height)]
+
+        # Create 2D representation of chunk cluster_region
+        for z in range(height):
+            for x in range(width):
+                c = (x+left, z+bottom)
+                cluster_region[z][x] = c in chunks;
+
+        return cluster_region;
 
 
 

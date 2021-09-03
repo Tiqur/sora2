@@ -1,5 +1,6 @@
 from bin.random import Random;
-import numpy as np
+import numpy as np;
+import copy;
 
 # Emulate world generation
 class World:
@@ -56,8 +57,8 @@ class World:
 
             # Add cluster to set if size >= min_size
             if len(self._slime_chunks) >= self._min_size and first:
-                cluster_region = self._generate_cluster_region(self._slime_chunks);
-                print(len(self._slime_chunks));
+                cluster_region = self._generate_cluster_region(copy.deepcopy(self._slime_chunks));
+                print(self._slime_chunks);
 
     # Generate 2D array representation of cluster
     def _generate_cluster_region(self, chunks):

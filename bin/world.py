@@ -32,6 +32,26 @@ class World:
             for x in range(-half_radius, half_radius, self._spacing):
                 self._get_cluster(x, z, True);
 
+    
+    # Organize chunks into histogram
+    def _create_submatrix_histogram(self, chunks):
+
+        # Initialize array and set all values to 0
+        histogram = [0 for i in range(len(chunks[0]))];
+        max_dimensions = (0, 0);
+
+        # Increment each element if multiple y chunks ( like histogram values )
+        for x in range(0, len(chunks)):
+            for z in range(0, len(chunks[0])):
+                histogram[z]+1 if chunks[x][z] else 0
+
+            temp = 0;  # Find largest rectangle in region cluster
+            if (temp[0] * temp[1] > max_dimensions[0] * max_dimensions[1]) max_dimensions = temp;
+
+        # Return dimensions of largest rect
+        return max_dimensions;
+
+
     # Recursively search for nearby slime chunks within cluster and return dimensions
     def _get_cluster(self, x, z, first=False):
 
@@ -58,6 +78,7 @@ class World:
             # Add cluster to set if size >= min_size
             if len(self._slime_chunks) >= self._min_size and first:
                 cluster_region = self._generate_cluster_region(self._slime_chunks);
+                largest_rect_dimensions = self._create_submatrix_histogram(cluster_region);
                 self._print_cluster_region(cluster_region);
 
     # Generate 2D array representation of cluster

@@ -57,6 +57,7 @@ class World:
             # Add cluster to set if size >= min_size
             if len(self._slime_chunks) >= self._min_size and first:
                 cluster_region = self._generate_cluster_region(self._slime_chunks);
+                self._print_cluster_region(cluster_region);
 
     # Generate 2D array representation of cluster
     def _generate_cluster_region(self, chunks):
@@ -88,7 +89,12 @@ class World:
         return cluster_region;
 
 
-
+    # Print cluster region
+    def _print_cluster_region(self, cluster_region):
+        for z in cluster_region:
+            for x in z:
+                print('■ ' if x else '□ ', end='');
+            print("");
 
     # For debugging
     def _print_map(self, radius):

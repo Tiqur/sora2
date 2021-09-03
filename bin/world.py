@@ -3,8 +3,9 @@ import numpy as np;
 
 # Emulate world generation
 class World:
-    def __init__(self, seed=0, radius=20, min_size=8):
+    def __init__(self, seed=0, radius=20, min_size=8, spacing=1):
         self._seed = seed;
+        self._spacing = spacing;
         self._min_size = min_size;
         self._random = Random();
         self._slime_chunks = [];
@@ -27,8 +28,8 @@ class World:
     # Search radius around 0, 0 for slime chunk clusters
     def _search(self, radius):
         half_radius = int(radius / 2);
-        for z in range(-half_radius, half_radius):
-            for x in range(-half_radius, half_radius):
+        for z in range(-half_radius, half_radius, self._spacing):
+            for x in range(-half_radius, half_radius, self._spacing):
                 self._get_cluster(x, z, True);
 
     # Recursively search for nearby slime chunks within cluster and return dimensions
@@ -96,7 +97,7 @@ class World:
                 print('■ ' if x else '□ ', end='');
             print("");
 
-    # For debugging
+    # Print all slime chunks in radius
     def _print_map(self, radius):
         half_radius = int(radius / 2);
         for z in range(-half_radius, half_radius):

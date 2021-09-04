@@ -7,18 +7,18 @@ ADDEND = 0xB;
 MASK = (1 << 48) - 1;
 
 
-@njit()
+@njit(fastmath=True)
 # Scramble initial seed
 def _initial_scramble(seed):
     return (seed ^ MULTIPLIER) & MASK;
 
-@njit()
+@njit(fastmath=True)
 # Generate next psuedo random number
 def _next(seed, bits):
     temp_seed = np.long(np.long(seed) * MULTIPLIER + ADDEND) & MASK;
     return (temp_seed >> (48 - bits));
 
-@njit()
+@njit(fastmath=True)
 # Emulate Java's random class for world generation
 def jrand_int(seed, n=32):
     # Set the seed of the random number generator

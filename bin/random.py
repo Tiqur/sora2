@@ -1,45 +1,43 @@
-import numpy as np
+from numba import njit;
+import numpy as np;
 
+
+MULTIPLIER = 0x5DEECE66D;
+ADDEND = 0xB;
+MASK = (1 << 48) - 1;
+
+
+@njit()
+# Scramble initial seed
+def _initial_scramble(seed):
+    return (seed ^ MULTIPLIER) & MASK;
+
+@njit()
+# Generate next psuedo random number
+def _next(seed, bits):
+    temp_seed = np.long(np.long(seed) * MULTIPLIER + ADDEND) & MASK;
+    return (temp_seed >> (48 - bits));
+
+@njit()
 # Emulate Java's random class for world generation
-class Random:
-    def __init__(self):
-        self._multiplier = 0x5DEECE66D;
-        self._addend = 0xB;
-        self._mask = (1 << 48) - 1;
-        self._seed = np.long;
-
-    # Scramble initial seed
-    def _initial_scramble(self, seed):
-        return (seed ^ self._multiplier) & self._mask;
-
-    # Generate next psuedo random number
-    def _next(self, bits):
-        self._seed = np.long(np.long(self._seed) * self._multiplier + self._addend) & self._mask;
-        return (self._seed >> (48 - bits));
-
+def jrand_int(seed, n=32):
     # Set the seed of the random number generator
-    def set_seed(self, seed):
-        self._seed = self._initial_scramble(seed);
+    scrambled_seed = _initial_scramble(seed);
 
     # Generate next pseudorandom int ( public )
-    def next_int(self, n=32):
-        # Make sure n is positive
-        if (n <= 0):
-            raise Exception('n must be positive');
+    if (n <= 0):
+        raise Exception('n must be positive');
 
-        # If n is a power of 2
-        if (n & -n) == n:
-            return ((n * self._next(31)) >> 31);
+    # If n is a power of 2
+    if (n & -n) == n:
+        return ((n * _next(scrambled_seed, 31)) >> 31);
 
-        condition = True;
-        while condition:
-            bits = self._next(31);
-            val = bits % n;
-            condition = bits - val + (n-1) < 0;
+    condition = True;
+    while condition:
+        bits = _next(scrambled_seed, 31);
+        val = bits % n;
+        condition = bits - val + (n-1) < 0;
 
-        return val;
+    return val;
 
 
-
-
-            

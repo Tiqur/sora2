@@ -1,4 +1,4 @@
-from bin.random import Random;
+from bin.random import jrand_int;
 import numpy as np;
 
 # Emulate world generation
@@ -7,14 +7,14 @@ class World:
         self._seed = seed;
         self._spacing = spacing;
         self._min_size = min_size;
-        self._random = Random();
         self._slime_chunks = [];
         self._search(radius);
 
     # Determine if there is a slime chunk at x, z
     def _is_slime_chunk(self, xPosition, zPosition):
+        
         # Set seed and location
-        self._random.set_seed(
+        seed = (
           np.long(self._seed) +
           np.int32(xPosition * xPosition * 0x4c1906) +
           np.int32(xPosition * 0x5ac0db) +
@@ -23,7 +23,7 @@ class World:
         );
 
         # Determine if slime chunk
-        return self._random.next_int(10) == 0;
+        return jrand_int(seed, 10) == 0;
 
     # Search radius around 0, 0 for slime chunk clusters
     def _search(self, radius):

@@ -10,13 +10,13 @@ class World:
         self._random = Random();
         self._slime_chunks = [];
         #self._search(radius);
-        self._get_cluster(-224, 62, True);
+        self._get_cluster(-300, 4304, True);
 
     # Determine if there is a slime chunk at x, z
     def _is_slime_chunk(self, xPosition, zPosition):
         # Set seed and location
         self._random.set_seed(
-          np.int32(self._seed) +
+          np.long(self._seed) +
           np.int32(xPosition * xPosition * 0x4c1906) +
           np.int32(xPosition * 0x5ac0db) +
           np.int32(zPosition * zPosition) * 0x4307a7 +

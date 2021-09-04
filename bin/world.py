@@ -9,8 +9,7 @@ class World:
         self._min_size = min_size;
         self._random = Random();
         self._slime_chunks = [];
-        #self._search(radius);
-        self._get_cluster(-300, 4304, True);
+        self._search(radius);
 
     # Determine if there is a slime chunk at x, z
     def _is_slime_chunk(self, xPosition, zPosition):
@@ -98,9 +97,12 @@ class World:
             # Add cluster to set if size >= min_size
             if len(self._slime_chunks) >= self._min_size and first:
                 cluster_region = self._generate_cluster_region(self._slime_chunks);
-                largest_rect_dimensions = self._find_largest_rect(cluster_region);
-                self._print_cluster_region(cluster_region);
-                print(largest_rect_dimensions);
+                largest_rect_size = self._find_largest_rect(cluster_region);
+
+                if largest_rect_size > self._min_size:
+                    print('Coords:', x, z);
+                    print('Size:', largest_rect_size);
+                    self._print_cluster_region(cluster_region);
 
     # Generate 2D array representation of cluster
     def _generate_cluster_region(self, chunks):

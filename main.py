@@ -1,12 +1,12 @@
 from bin.world import search;
 import multiprocessing as mp;
-import datetime, random, requests;
+import datetime, random, requests, json;
 
-WORLDS = 1;
+WORLDS = 999999999999999;
 THREADS = 4;
-RADIUS = 10000;
-MIN_SIZE = 6;
-SPACING = 3;
+RADIUS = 1000;
+MIN_SIZE = 4;
+SPACING = 4;
 
 seeds_searched = 0;
 thread_pool = [];
@@ -20,7 +20,8 @@ def search_seed(seed):
 
     # If cluster is found, POST to server
     if clusters:
-        requests.post('http://149.28.75.54/api', data=str(clusters));
+        print(clusters[0])
+        requests.post('http://localhost:3000/api', headers={'Content-type': 'application/json', 'Accept': 'text/plain'}, data=json.dumps(clusters));
 
 
 

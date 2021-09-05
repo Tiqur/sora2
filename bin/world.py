@@ -128,7 +128,7 @@ def _get_cluster(x, z, min_size, seed, slime_chunks, first=False):
             largest_rect_size = _find_largest_rect(copy.deepcopy(cluster_region));
 
             if largest_rect_size > min_size:
-                center_coordinates = (int((bounding_box[0] + bounding_box[1]) / 2 << 4), int((bounding_box[2] + bounding_box[3]) / 2 << 4));
+                center_coordinates = (int((bounding_box[0] + bounding_box[1]) / 2) << 4, int((bounding_box[2] + bounding_box[3]) / 2) << 4);
                 return {'seed': seed, 'chunks': [{'x': c[0], 'z': c[1]} for c in slime_chunks], 'coords': center_coordinates, 'repr': cluster_region, 'size': largest_rect_size};
                 _print_cluster_region(cluster_region);
 

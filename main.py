@@ -1,6 +1,6 @@
 from bin.world import search;
 import multiprocessing as mp;
-import datetime, random;
+import datetime, random, requests;
 
 WORLDS = 1;
 THREADS = 4;
@@ -13,12 +13,15 @@ thread_pool = [];
 
 # Search random seed
 def search_seed(seed):
-    start = datetime.datetime.now();
+    #start = datetime.datetime.now();
     print("Searching: " + str(seed));
     clusters = search(seed=seed, radius=RADIUS, min_size=MIN_SIZE, spacing=SPACING);
-    print(clusters)
-    print(datetime.datetime.now() - start);
+    #print(datetime.datetime.now() - start);
+
     # If cluster is found, POST to server
+    if clusters:
+        requests.post('http://149.28.75.54/api', data=str(clusters));
+
 
 
 # Generate random seed

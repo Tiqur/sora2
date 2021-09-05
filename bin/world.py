@@ -1,7 +1,7 @@
 from bin.random import jrand_int;
 from numba import njit;
 import numpy as np;
-
+import copy;
 
 # Organize chunks into histogram
 def _max_histogram(row):
@@ -42,9 +42,9 @@ def _find_largest_rect(histogram):
 
     return result
 
-# Generate 2D array representation of cluster
-def _generate_cluster_region(chunks):
 
+def _generate_bounding_box(chunks):
+    
     # Initialize bounding box
     left = right = chunks[0][0];
     top = bottom = chunks[0][1];
@@ -55,6 +55,16 @@ def _generate_cluster_region(chunks):
         right = max(c[0], right);
         top = max(c[1], top);
         bottom = min(c[1], bottom);
+
+    return (left, right, top, bottom);
+
+# Generate 2D array representation of cluster
+def _generate_cluster_region(bounding_box, chunks):
+
+    left = bounding_box[0];
+    right = bounding_box[1];
+    top = bounding_box[2];
+    bottom = bounding_box[3];
 
     # Bounding box dimensions
     width = right + 1 - left;
@@ -113,8 +123,9 @@ def _get_cluster(x, z, min_size, seed, slime_chunks, first=False):
 
         # Add cluster to set if size >= min_size
         if len(slime_chunks) >= min_size and first:
-            cluster_region = _generate_cluster_region(slime_chunks);
-            largest_rect_size = _find_largest_rect(cluster_region);
+            bounding_box = _generate_bounding_box(slime_chunks);
+            cluster_region = _generate_cluster_region(bounding_box, slime_chunks);
+            largest_rect_size = _find_largest_rect(copy.deepcopy(cluster_region));
 
             if largest_rect_size > min_size:
                 print('Coords:', x, z);
@@ -124,11 +135,15 @@ def _get_cluster(x, z, min_size, seed, slime_chunks, first=False):
 # Search and return slime chunk clusters for seed
 def search(seed=0, radius=20, min_size=8, spacing=1):
     half_radius = int(radius / 2);
+    clusters = [];
 
     # Search radius around 0, 0
     for z in range(-half_radius, half_radius, spacing):
         for x in range(-half_radius, half_radius, spacing):
-            _get_cluster(x, z, min_size, seed, [], True);
+            cluster = _get_cluster(x, z, min_size, seed, [], True);
+            if cluster: clusters.append(cluster);
+
+    return clusters;
 
 
 # Print cluster region

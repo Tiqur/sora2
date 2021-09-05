@@ -2,10 +2,10 @@ from bin.world import search;
 import multiprocessing as mp;
 import datetime, random;
 
-WORLDS = 100;
+WORLDS = 1;
 THREADS = 4;
 RADIUS = 10000;
-MIN_SIZE = 10;
+MIN_SIZE = 6;
 SPACING = 3;
 
 seeds_searched = 0;
@@ -16,6 +16,7 @@ def search_seed(seed):
     start = datetime.datetime.now();
     print("Searching: " + str(seed));
     clusters = search(seed=seed, radius=RADIUS, min_size=MIN_SIZE, spacing=SPACING);
+    print(clusters)
     print(datetime.datetime.now() - start);
     # If cluster is found, POST to server
 

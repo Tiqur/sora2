@@ -1,12 +1,12 @@
 from bin.world import search;
 import multiprocessing as mp;
-import datetime, random, requests, json;
+import datetime, random, requests, json, os;
 
-WORLDS = 999999999999999;
-THREADS = 4;
-RADIUS = 1000;
-MIN_SIZE = 4;
-SPACING = 4;
+WORLDS = int(os.environ.get('WORLDS', 999999999999999));
+THREADS = int(os.environ.get('THREADS', 4));
+RADIUS = int(os.environ.get('RADIUS', 2500));
+MIN_SIZE = int(os.environ.get('MIN_SIZE', 18));
+SPACING = int(os.environ.get('SPACING', 3));
 
 seeds_searched = 0;
 thread_pool = [];
@@ -15,7 +15,7 @@ thread_pool = [];
 def search_seed(seed):
     #start = datetime.datetime.now();
     print("Searching: " + str(seed));
-    clusters = search(seed=seed, radius=RADIUS, min_size=MIN_SIZE, spacing=SPACING);
+    clusters = search(seed=seed, radius=RADIUS*2, min_size=MIN_SIZE, spacing=SPACING);
     #print(datetime.datetime.now() - start);
 
     # If cluster is found, POST to server

@@ -20,7 +20,6 @@ def search_seed(seed):
 
     # If cluster is found, POST to server
     if clusters:
-        print(clusters[0])
         requests.post('http://localhost:3000/api', headers={'Content-type': 'application/json', 'Accept': 'text/plain'}, data=json.dumps(clusters));
 
 

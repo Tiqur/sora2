@@ -1,4 +1,5 @@
 from bin.random import jrand_int;
+from numba import njit;
 import numpy as np;
 
 
@@ -72,6 +73,7 @@ def _generate_cluster_region(chunks):
 
 
 # Determine if there is a slime chunk at x, z
+@njit(fastmath=True)
 def _is_slime_chunk(xPosition, zPosition, seed):
     # Set seed and location
     seed = (
@@ -111,8 +113,8 @@ def _get_cluster(x, z, min_size, seed, slime_chunks, first=False):
 
         # Add cluster to set if size >= min_size
         if len(slime_chunks) >= min_size and first:
-            cluster_region = generate_cluster_region(slime_chunks);
-            largest_rect_size = find_largest_rect(cluster_region);
+            cluster_region = _generate_cluster_region(slime_chunks);
+            largest_rect_size = _find_largest_rect(cluster_region);
 
             if largest_rect_size > min_size:
                 print('Coords:', x, z);

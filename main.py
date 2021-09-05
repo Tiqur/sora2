@@ -1,10 +1,10 @@
 from bin.world import search;
-import datetime, random, threading;
-import time;
+import multiprocessing as mp;
+import datetime, random;
 
 WORLDS = 100;
 THREADS = 4;
-RADIUS = 5000;
+RADIUS = 10000;
 MIN_SIZE = 10;
 SPACING = 3;
 
@@ -31,7 +31,7 @@ while seeds_searched < WORLDS:
     if len(thread_pool) < THREADS:
         seeds_searched += 1;
         seed = random.randint(-9223372036854775808, 9223372036854775807);
-        t = threading.Thread(target=search_seed, args=(seed, ));
+        t = mp.Process(target=search_seed, args=(seed, ));
         thread_pool.append(t);
         t.start();
 

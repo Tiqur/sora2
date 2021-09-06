@@ -15,7 +15,7 @@ thread_pool = [];
 # Search random seed
 def search_seed(seed):
     #start = datetime.datetime.now();
-    print(f"{Fore.RESET}Searching: {Fore.YELLOW}{str(seed)}");
+    print(f"{Fore.RESET}Searching: {Fore.YELLOW}{str(seed)}{Fore.RESET}");
     clusters = search(seed=seed, radius=RADIUS*2, min_size=MIN_SIZE, spacing=SPACING);
     #print(datetime.datetime.now() - start);
 

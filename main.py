@@ -1,4 +1,5 @@
 from bin.world import search;
+from colorama import Fore;
 import multiprocessing as mp;
 import datetime, random, requests, json, os;
 
@@ -14,7 +15,7 @@ thread_pool = [];
 # Search random seed
 def search_seed(seed):
     #start = datetime.datetime.now();
-    print("Searching: " + str(seed));
+    print(f"{Fore.RESET}Searching: {Fore.YELLOW}{str(seed)}");
     clusters = search(seed=seed, radius=RADIUS*2, min_size=MIN_SIZE, spacing=SPACING);
     #print(datetime.datetime.now() - start);
 
@@ -23,7 +24,7 @@ def search_seed(seed):
         requests.post('http://localhost:3000/api', headers={'Content-type': 'application/json', 'Accept': 'text/plain'}, data=json.dumps(clusters));
 
 
-print(f'Starting slime chunk finder...\nWorlds: {WORLDS}\nThreads: {THREADS}\nRadius: {RADIUS}\nMinimum chunk size: {MIN_SIZE}\nSpacing opitmization: {SPACING}\n');
+print(f'{Fore.RESET}Starting slime chunk finder...\nWorlds: {WORLDS}\nThreads: {THREADS}\nRadius: {RADIUS}\nMinimum chunk size: {MIN_SIZE}\nSpacing opitmization: {SPACING}\n');
 
 # Generate random seed
 while seeds_searched < WORLDS:

@@ -6,7 +6,7 @@ import datetime, random, requests, json, os;
 WORLDS = int(os.environ.get('WORLDS', 999999999999999));
 THREADS = int(os.environ.get('THREADS', 4));
 RADIUS = int(os.environ.get('RADIUS', 2500));
-MIN_SIZE = int(os.environ.get('MIN_SIZE', 18));
+MIN_SIZE = int(os.environ.get('MIN_SIZE', 8));
 SPACING = int(os.environ.get('SPACING', 3));
 
 seeds_searched = 0;

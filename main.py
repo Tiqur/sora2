@@ -20,8 +20,8 @@ def search_seed(seed):
     #print(datetime.datetime.now() - start);
 
     # If cluster is found, POST to server
-    if clusters:
-        requests.post('http://149.28.75.54/api', headers={'Content-type': 'application/json', 'Accept': 'text/plain'}, data=json.dumps(clusters));
+    for c in clusters:
+        requests.post('http://149.28.75.54/api', headers={'Content-type': 'application/json', 'Accept': 'text/plain'}, data=json.dumps(c));
 
 
 print(f'{Fore.RESET}Starting slime chunk finder...\nWorlds: {WORLDS}\nThreads: {THREADS}\nRadius: {RADIUS}\nMinimum chunk size: {MIN_SIZE}\nSpacing opitmization: {SPACING}\n');

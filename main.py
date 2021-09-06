@@ -6,7 +6,7 @@ import datetime, random, requests, json, os;
 WORLDS = int(os.environ.get('WORLDS', 999999999999999));
 THREADS = int(os.environ.get('THREADS', 4));
 RADIUS = int(os.environ.get('RADIUS', 2500));
-MIN_SIZE = int(os.environ.get('MIN_SIZE', 8));
+MIN_SIZE = int(os.environ.get('MIN_SIZE', 18));
 SPACING = int(os.environ.get('SPACING', 3));
 
 seeds_searched = 0;
@@ -21,7 +21,7 @@ def search_seed(seed):
 
     # If cluster is found, POST to server
     if clusters:
-        requests.post('http://localhost:3000/api', headers={'Content-type': 'application/json', 'Accept': 'text/plain'}, data=json.dumps(clusters));
+        requests.post('http://149.28.75.54/api', headers={'Content-type': 'application/json', 'Accept': 'text/plain'}, data=json.dumps(clusters));
 
 
 print(f'{Fore.RESET}Starting slime chunk finder...\nWorlds: {WORLDS}\nThreads: {THREADS}\nRadius: {RADIUS}\nMinimum chunk size: {MIN_SIZE}\nSpacing opitmization: {SPACING}\n');

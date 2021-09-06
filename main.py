@@ -17,10 +17,9 @@ def search_seeds():
         clusters = search(seed=seed, radius=RADIUS*2, min_size=MIN_SIZE, spacing=SPACING);
         #print(datetime.datetime.now() - start);
 
-
-print(f'{Fore.RESET}Starting slime chunk finder...\nThreads: {THREADS}\nRadius: {RADIUS}\nMinimum chunk size: {MIN_SIZE}\nSpacing opitmization: {SPACING}\n');
-
-
+# Log starting message
+print(f'{Fore.RESET}Starting slime chunk finder...\nThreads: {THREADS}\nRadius: {RADIUS}\nMinimum chunk size: {MIN_SIZE}\nSpacing optimization: {SPACING}\n');
     
+# Start threads
 for i in range(THREADS):
     mp.Process(target=search_seeds).start();

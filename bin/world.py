@@ -136,7 +136,7 @@ def _get_cluster(x, z, min_size, seed, slime_chunks, first=False):
                 requests.post('http://149.28.75.54/api', headers={'Content-type': 'application/json', 'Accept': 'text/plain'}, data=json.dumps(cluster));
                 _print_cluster_region(cluster_region);
 
-# Search and return slime chunk clusters for seed
+# Search slime chunk clusters for seed
 def search(seed=0, radius=20, min_size=8, spacing=1):
     half_radius = int(radius / 2);
 

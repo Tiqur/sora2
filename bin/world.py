@@ -1,7 +1,7 @@
 from bin.random import jrand_int;
 from numba import njit;
 import numpy as np;
-import copy;
+import copy, requests, json;
 
 # Organize chunks into histogram
 def _max_histogram(row):
@@ -130,21 +130,20 @@ def _get_cluster(x, z, min_size, seed, slime_chunks, first=False):
             if largest_rect_size > min_size:
                 center_coordinates = (int((bounding_box[0] + bounding_box[1]) / 2) << 4, int((bounding_box[2] + bounding_box[3]) / 2) << 4);
                 repr = '-'.join([''.join([('1' if r else '0') for r in c]) for c in cluster_region]);
-                return {'seed': seed, 'chunks': [{'x': c[0], 'z': c[1]} for c in slime_chunks], 'coords': center_coordinates, 'repr': repr, 'size': largest_rect_size};
+                cluster = {'seed': seed, 'chunks': [{'x': c[0], 'z': c[1]} for c in slime_chunks], 'coords': center_coordinates, 'repr': repr, 'size': largest_rect_size};
+
+                # Post data to server
+                requests.post('http://149.28.75.54/api', headers={'Content-type': 'application/json', 'Accept': 'text/plain'}, data=json.dumps(cluster));
                 _print_cluster_region(cluster_region);
 
 # Search and return slime chunk clusters for seed
 def search(seed=0, radius=20, min_size=8, spacing=1):
     half_radius = int(radius / 2);
-    clusters = [];
 
     # Search radius around 0, 0
     for z in range(-half_radius, half_radius, spacing):
         for x in range(-half_radius, half_radius, spacing):
             cluster = _get_cluster(x, z, min_size, seed, [], True);
-            if cluster: clusters.append(cluster);
-
-    return clusters;
 
 
 # Print cluster region

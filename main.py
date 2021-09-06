@@ -1,7 +1,7 @@
 from bin.world import search;
 from colorama import Fore;
 import multiprocessing as mp;
-import datetime, random, requests, json, os;
+import datetime, random, os;
 
 WORLDS = int(os.environ.get('WORLDS', 999999999999999));
 THREADS = int(os.environ.get('THREADS', 4));
@@ -18,10 +18,6 @@ def search_seed(seed):
     print(f"{Fore.RESET}Searching: {Fore.YELLOW}{str(seed)}{Fore.RESET}");
     clusters = search(seed=seed, radius=RADIUS*2, min_size=MIN_SIZE, spacing=SPACING);
     #print(datetime.datetime.now() - start);
-
-    # If cluster is found, POST to server
-    for c in clusters:
-        requests.post('http://149.28.75.54/api', headers={'Content-type': 'application/json', 'Accept': 'text/plain'}, data=json.dumps(c));
 
 
 print(f'{Fore.RESET}Starting slime chunk finder...\nWorlds: {WORLDS}\nThreads: {THREADS}\nRadius: {RADIUS}\nMinimum chunk size: {MIN_SIZE}\nSpacing opitmization: {SPACING}\n');
